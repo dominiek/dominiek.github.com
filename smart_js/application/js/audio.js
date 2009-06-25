@@ -35,6 +35,7 @@ iknow.audio = {
 	},
 	
 	play: function(uri) {
+	  return false;
 		
 		if(!iknow.audio.cache[uri])
 			iknow.audio.load(uri);
