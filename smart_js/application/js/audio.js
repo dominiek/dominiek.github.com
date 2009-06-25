@@ -1,5 +1,5 @@
 if(!window.Audio || $.browser.mozilla) { //Stupid Firefox doesn't support mp3 playback
-	$('head').prepend('<script src="../vendor/soundmanager2/script/soundmanager2-nodebug-jsmin.js"></script>'); //this is synchroneous
+	$('head').prepend('<script src="http://dominiek.github.com/smart_js/vendor/soundmanager2/script/soundmanager2-nodebug-jsmin.js"></script>'); //this is synchroneous
 	//$.getScript("../vendor/soundmanager2/script/soundmanager2-nodebug-jsmin.js");
 }
 
