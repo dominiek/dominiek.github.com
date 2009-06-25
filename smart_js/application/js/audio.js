@@ -13,6 +13,7 @@ $(document).ready(function() {
 iknow.audio = {
 	
 	load: function(uri) {
+	  return false;
 		
 		if(typeof uri == 'array') {
 			for (var i=0; i < uri.length; i++) {
