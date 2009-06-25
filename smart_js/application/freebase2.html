@@ -1,0 +1,289 @@
+<html>
+  <head>
+    <title>Smart.fm Freebase</title>
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/vendor/jquery-1.3.2.js"></script>
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/vendor/jquery-ui/js/jquery-ui-1.7.2.custom.min.js"></script>
+
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/smart.js"></script>
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/smart.ime.js"></script>
+
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/smart.session.js"></script>
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/smart.quizzes.multiple_choice.js"></script>
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/smart.quizzes.spelling.js"></script>
+  
+    <link href="http://dominiek.github.com/smart_js/vendor/jquery-ui/css/smoothness/jquery-ui-1.7.2.custom.css" media="all" rel="stylesheet" type="text/css">
+    <link href="http://dominiek.github.com/smart_js/vendor/jquery-ui/css/smoothness/buttons.css" media="all" rel="stylesheet" type="text/css">
+    <link href="http://dominiek.github.com/smart_js/vendor/smartfm/smartness/base.css" media="all" rel="stylesheet" type="text/css">    
+      
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/vendor/rotate3di-0.9/jquery-css-transform.js"></script>
+
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/vendor/rotate3di-0.9/rotate3di-0.9.js"></script>
+
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/application/js/base.js"></script>
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/application/js/behaviour.js"></script>
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/application/js/audio.js"></script>
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/application/js/screen.preview.js"></script>
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/application/js/screen.study.js"></script>
+
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/application/js/screen.recall.js"></script>
+    <script type="text/javascript" src="http://dominiek.github.com/smart_js/application/js/screen.quiz.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        
+      });
+    </script>
+  </head>
+<body>
+
+  <div class="page-wrapper">
+  <img style="visibility:hidden; position:absolute; left:-9999px; top: -9999px;" src="vendor/smartfm/smartness/images/flipper.png">
+
+  <div class="session-window ui-corner-all clr">
+    <div class="session-window-inner clr">
+      <div class="session-heading-panel ui-corner-top clr">
+        <div class="session-progress ui-corner-all clr">
+          <a class="ui-corner-all ui-button button-play" href="#"><span>pause</span></a>
+          <div class="progress-bar-wrapper">
+            <div id="progressbar"></div>
+          </div>
+
+          <div class="session-timer" id="timer">00:00</div>
+        </div>
+        <div class="session-settings">
+        </div>
+      </div>
+      <div class="session-main-panel clr">
+        <div class="study-panel">
+          <div id="tabs">
+
+            <ul>
+              <li><a href="#tabs-1">Study Item</a></li>
+              <li><a href="#tabs-2">Sentences</a></li>
+              <li><a href="#tabs-3">Extra Info</a></li>
+              <li><a href="#tabs-4">Quiz practice</a></li>
+            </ul>
+            <div id="tabs-1">
+
+              <div class="item-card large-card ui-corner-all" id="item-card">
+    
+                <div class="item-card-inner-cue cue-text-quiz">
+                    <div class="item-cue">
+                        <span class="cue-image" id="calculate-study"></span>
+                    </div>
+                </div>
+                
+              </div>
+            </div>
+            <div id="tabs-2">
+
+              <div class="session-sentences">
+                <div class="session-sentences-inner">
+                  <div class="session-sentence clr" id="sentence_246969" lang="ja" xml:lang="ja">
+                    <img title="彼の車は新しい。" src="http://assets1.smart.fm/assets/legacy/images/02/5396779.jpg">
+                    <a class="fg-button ui-state-default ui-corner-all" href="http://assets2.smart.fm/assets/legacy/JLL/audio/JS00147A.mp3">play</a>
+                    <p class="session-sentence-text">
+                      <span class="sentence-text">彼の車は新しい。</span>
+                      <span class="transliteration"> かれ の くるま は あたらしい</span>
+
+                    </p>
+                    <div class="attribution License">
+                      <span class="created_by vcard">
+                        Created by:
+                        <a href="http://smart.fm/user/Cerego">Cerego</a>
+                      </span>
+                      <span class="vcard from">
+                        Sentence Source:
+                        Cerego
+                      </span>
+
+                    </div>
+                  </div>
+                  <div class="session-sentence clr" id="sentence_247241" lang="ja" style="display:none;" xml:lang="ja">
+                    <img title="新しい年が始まりました。" src="http://assets1.smart.fm/assets/legacy/images/02/4796732.jpg">
+                    <a class="fg-button ui-state-default ui-corner-all" href="http://assets0.smart.fm/assets/legacy/JLL/audio/JS06421A.mp3">play</a>
+                    <p class="session-sentence-text">
+                      <span class="sentence-text">新しい年が始まりました。</span>
+                      <span class="transliteration">  あたらしい とし が はじまりました</span>
+
+                    </p>
+                    <div class="attribution License">
+                      <span class="created_by vcard">
+                        Created by:
+                        <a href="http://smart.fm/user/Cerego">Cerego</a>
+                      </span>
+                      <span class="vcard from">
+                        Sentence Source:
+                        Cerego
+                      </span>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="tabs-3">
+              <div class="extra-info">
+                <div class="extra-info-inner">
+                  <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+
+                  <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+
+                  <img title="彼の車は新しい。" src="http://assets1.smart.fm/assets/legacy/images/02/5396779.jpg">
+
+                  <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+
+                  <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+                </div>
+
+              </div>
+            </div>
+            <div id="tabs-4">
+              <div class="quiz-types">
+                <div class="quiz-types-inner">
+                  <div class="multiple-choice d-5" style="display:none;">
+                    <p class="multiple-choice-question"><strong> 新しい</strong>は英語でなんですか？</p>
+
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">old</button>
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">red</button>
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">fresh</button>
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">new</button>
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">none of the above</button>
+                  </div>
+
+                  <div class="multiple-choice d-10" style="display:none;">
+                    <p class="multiple-choice-question"><strong> 新しい</strong>は英語でなんですか？</p>
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">old</button>
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">red</button>
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">fresh</button>
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">new</button>
+
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">loud</button>
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">fast</button>
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">quick</button>
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">brown</button>
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">new</button>
+                    <button class="fg-button ui-state-default ui-corner-all" type="button">big</button>
+
+                  </div>
+                  <div class="enter-missing" style="">
+                    <div class="enter-missing-inner">
+                      <div class="enter-missing-item">
+                        <div class="item-cue">
+                          <span class="cue-audio">
+                            <a class="fg-button ui-state-default ui-corner-all" href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3">play</a>
+                          </span>
+
+                          <span class="cue-text"><em>【新しい】</em></span>
+                        </div>
+                        <div class="enter-missing-input">
+                          <div class="dictation-input-wrapper">
+                            <input class="dictation-input" type="text" value="">
+                            <div class="dictation-bars"></div>    
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>  
+          </div>
+        </div><!-- End demo -->
+
+        <div class="session-recall item-card large-card cue-text-recall ui-corner-all">
+          <div class="session-recall-inner">
+
+            <div class="item-cue">
+              <span class="cue-text">あたらしい <em>【新しい】</em></span>
+            </div>
+            <p class="session-recall-question">What does this mean in English?</p>
+          </div>
+        </div>
+
+        <div class="multiple-choice-quiz">
+
+          <p class="multiple-choice-question"><strong> 新しい</strong>は英語でなんですか？</p>
+          <div class="multiple-choice d-5 multiple-choice-image">
+            <button class="fg-button ui-state-default ui-corner-all" id="calculate-quiz" type="button">old</button>
+            <button class="fg-button ui-state-default ui-corner-all" type="button">red</button>
+            <button class="fg-button ui-state-default ui-corner-all" type="button">fresh</button>
+            <button class="fg-button ui-state-default ui-corner-all" type="button">new</button>
+
+            <button class="fg-button ui-state-default ui-corner-all last-button" type="button">loud</button>
+          </div>
+        </div>
+
+        <div class="enter-missing-quiz">
+          <div class="enter-missing-inner">
+            <div class="enter-missing-item">
+              <div class="item-cue">
+                <span class="cue-audio">
+
+                  <a class="fg-button ui-state-default ui-corner-all" href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3">play</a>
+                </span>
+                <span class="cue-text"><em>【新しい】</em></span>
+              </div>
+              <div class="enter-missing-input">
+                <div class="dictation-input-wrapper">
+                  <input class="dictation-input" type="text" value="">
+                  <div class="dictation-bars"></div>    
+                  <div class="answer-icon"></div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="session-preview">
+          <div class="session-preview-inner">
+
+            <!-- Sample preview item for width/height calculation purposes -->
+
+            <div class="item-card small-card">
+              <div class="small-card-inner ui-corner-all">
+                  <div class="item-card-inner-cue" id="calculate-preview">
+                      <div class="item-cue">
+                      </div>
+                  </div>
+                </div>
+            </div>    
+                
+          </div>
+
+        </div>
+
+      </div>
+      <div class="session-footer-panel ui-corner-bottom clr">
+        <div class="right-button">
+          <a class="fg-button ui-state-default ui-corner-all" href="#"><span class="ui-icon icon-next-large">►</span>Next</a>
+        </div>
+        <div class="fg-buttonset fg-buttonset-single">
+
+          <button class="fg-button ui-state-default ui-priority-primary ui-corner-left">No</button>
+          <button class="fg-button ui-state-default ui-priority-primary">Maybe</button>
+          <button class="fg-button ui-state-default ui-priority-primary ui-corner-right">Yes</button>
+        </div>
+        <div id="quiz-timer"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- Freebase attribution template -->
+    <div class="freebase-attribution" style="padding-top:2em">
+  <a href="http://www.freebase.com/"><img alt="Freebase CC-BY" style="float: left; border: 0;" src="http://attribution.freebaseapps.com/freebase-attribution.png"></a>
+  <div style="font-size: x-small; margin-left: 70px;">
+    Source:  
+    <a href="http://www.freebase.com/">Freebase</a>, licensed under 
+    <a href="http://creativecommons.org/licenses/by/2.5/">CC-BY</a><br> 
+    <a href="http://www.freebase.com/tools/appeditor/#app=/user/dominiek/smartfm">View the source</a> of this app
+  </div>
+
+</div>
+
+
+</body></html>
