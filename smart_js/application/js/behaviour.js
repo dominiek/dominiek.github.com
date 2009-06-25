@@ -11,13 +11,13 @@ $(document).ready(function() {
 	
 	// button click actions
 	$('div.session-footer-panel div.right-button a').bind('click', function() {
-		iknow.audio.play('media/sounds/spell_press.mp3');
+		iknow.audio.play('http://dominiek.github.com/smart_js/application/media/sounds/spell_press.mp3');
 		iknow.session.next(iknow.result != undefined ? iknow.result : 1);
 		return false;
 	});
 	
 	$('div.session-footer-panel div.fg-buttonset button').bind('click', function() {
-		iknow.audio.play('media/sounds/spell_press.mp3');
+		iknow.audio.play('http://dominiek.github.com/smart_js/application/media/sounds/spell_press.mp3');
 		iknow.session.next($(this).parent().find('button').index(this)-1);
 		return false;
 	});
@@ -143,7 +143,7 @@ $(document).ready(function() {
 		var position = self.position();
 		var flipper = $('<div class="flipper"></div>')
 			.css({
-				background: 'url(../vendor/smartfm/smartness/images/ui_card_flip.png) no-repeat 0 0',
+				background: 'url(http://dominiek.github.com/smart_js/vendor/smartfm/smartness/images/ui_card_flip.png) no-repeat 0 0',
 				width:this.offsetWidth + (this.offsetWidth/8) ,
 				height: this.offsetHeight,
 				position: 'absolute',
