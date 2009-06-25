@@ -11,11 +11,7 @@ $(document).ready(function() {
 	
 	// button click actions
 	$('div.session-footer-panel div.right-button a').bind('click', function() {
-	  alert('one');
-	  console.log('test');
 		iknow.audio.play('http://dominiek.github.com/smart_js/application/media/sounds/spell_press.mp3');
-	  alert('two');
-	  console.log('two');
 		iknow.session.next(iknow.result != undefined ? iknow.result : 1);
 		return false;
 	});
