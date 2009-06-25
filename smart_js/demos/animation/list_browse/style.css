@@ -1,0 +1,26 @@
+html,body {
+	margin: 0; padding: 0;
+	background: #000;
+	overflow: hidden;
+	font-family: Lucida Grande;
+	color: #333;
+}
+
+ul {
+	margin: 0; padding: 0;
+	list-style: none;
+}
+
+ul li {
+	margin: 0; padding: 0;
+	width: 500px;
+	height: 200px;
+	background: #fff;
+	position: absolute;
+	-webkit-border-radius: 5px;
+	font-size: 2em;
+	text-align: center;
+	text-shadow: -1px -1px 0px #fff;
+	-webkit-box-shadow: 0px 0px 5px #aaa; /* Shiny edges */
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#bbb));
+}

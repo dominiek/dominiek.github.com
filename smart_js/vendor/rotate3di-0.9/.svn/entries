@@ -1,0 +1,76 @@
+8
+
+dir
+100
+http://svn.zachstronaut.com/files/zachstronaut/web/projects/rotate3di/rotate3di-0.9
+http://svn.zachstronaut.com/files
+
+
+
+2009-03-12T02:10:01.201642Z
+100
+zach
+
+
+svn:special svn:externals svn:needs-lock
+
+CHANGELOG
+file
+
+
+
+
+2009-03-12T02:07:07.000000Z
+fe5dd15f78e89d1b5ff320cd66b66756
+2009-03-12T02:10:01.201642Z
+100
+zach
+
+jquery-css-transform.js
+file
+
+
+
+
+2009-02-24T04:13:21.000000Z
+e50a7f5f660d0d83ba180aca6b1cd414
+2009-03-12T02:10:01.201642Z
+100
+zach
+
+jquery-1.3.2.min.js
+file
+
+
+
+
+2009-03-11T00:04:36.000000Z
+bb381e2d19d8eace86b34d20759491a5
+2009-03-12T02:10:01.201642Z
+100
+zach
+
+README
+file
+
+
+
+
+2009-03-12T02:06:54.000000Z
+e49c258b0714e518e9d7c93a10ee2002
+2009-03-12T02:10:01.201642Z
+100
+zach
+
+rotate3di-0.9.js
+file
+
+
+
+
+2009-03-12T02:08:10.000000Z
+f59102d4c8c20729f371d5f1723f99e3
+2009-03-12T02:10:01.201642Z
+100
+zach
+

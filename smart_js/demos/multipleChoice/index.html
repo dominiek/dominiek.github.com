@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Multiple Choice Quiz Testing</title>
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js"></script>
+	<script type="text/javascript" src="../../smart.js"></script>
+	<script type="text/javascript" src="../../smart.quizzes.multiple_choice.js"></script>
+	
+	<style type="text/css" media="screen">
+		
+		html, body {
+			margin: 0; padding: 0;
+			font-size: 12px; font-family: Lucida Grande;
+		}
+		
+		div.recall {
+			position: absolute; top: 20px; bottom: 20px; left: 20px; right: 50%; margin-right: 10px;
+			background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#aaa));
+			-webkit-border-radius: 10px;
+			border: 1px solid #666;
+		}
+		
+		div.quiz {
+			position: absolute; top: 20px; bottom: 20px; right: 20px; left: 50%; margin-left: 10px;
+			background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#aaa));
+			-webkit-border-radius: 10px;
+			border: 1px solid #666;
+		}
+		
+		div.recall h1 {
+			margin: 0; width: 100%;
+			position: absolute; top: 50%;
+			text-align: center;
+			margin-top: -20px;
+		}
+		
+		div.recall img {
+			width: 400px;
+			margin-top: -400px;
+		}
+		
+		div.quiz img {
+			width: 150px;
+		}
+		
+		div.recall h2 {
+			margin: 0; width: 100%;
+			position: absolute; top: 50%;
+			text-align: center;
+			margin-top: 20px;
+		}
+		
+		div.quiz div.items {
+			margin: 0; width: 100%;
+			position: absolute; top: 50%;
+			text-align: center;
+			margin-top: -100px;
+		}
+		
+		div.quiz div.items p {
+			font-size: 2em; padding: 3px; margin: 0 auto; cursor: pointer; cursor: hand;
+			background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#aaa));
+			-webkit-border-radius: 5px;
+			
+			width: 50%; margin-bottom: 10px;
+			-webkit-box-shadow: 5px 5px 0px #666;
+			text-shadow: 1px 1px 0px #fff;
+		}
+		
+		div.quiz div.items p:hover {
+			-webkit-box-shadow: 0px 0px 0px #666;
+			position: relative; top: 5px; left: 5px;
+		}
+		
+	</style>
+	
+	<script type="text/javascript" charset="utf-8">
+		
+		
+		var item = {
+			
+			id: 34891,
+			
+			progress: {
+				percentage: 0,
+				urgency: 0,
+				skipped: false
+			},
+			
+			cue: {
+				type: 'text', // text/image/sound/video
+				
+				content: {
+					text: 'have',
+					image: null, // if content type doesn't exist more item, value should be null
+					sound: 'http://assets2.smart.fm/assets/legacy/core/audio/core1_1_q_1.mp3',
+					video: null
+				},
+				
+				related: {
+					language: 'en',
+					character: null,
+					part_of_speech: 'Verb',
+					transliterations: null, //If no transliterations exist, value should be null
+					distractors: ['make', 'give', 'play', 'come', 'want', 'feel', 'put', 'write', 'tell'],
+					sentences: [
+						{
+							href: 'http://smart.fm/sentences/12375',
+							language: 'en',
+							id: 12375,
+							text: 'I <b>have</b> a lot of money.',
+							transliterations: {},
+							translations: {}
+						},
+						{
+							href: 'http://smart.fm/sentences/12376',
+							language: 'en',
+							id: 12376,
+							text: "I don't <b>have</b> any money.",
+							transliterations: {},
+							translations: {}
+						}
+					]
+				},
+				
+			},
+			
+			response: {
+				type: 'text', // text/image/sound/video
+				
+				content: {
+					text: '持っている',
+					image: null, // if content type doesn't exist more item, value should be null
+					sound: 'http://assets2.smart.fm/assets/legacy/core/audio/core1_1_q_1.mp3',
+					video: null
+				},
+				
+				related: {
+					language: 'ja',
+					character: null,
+					part_of_speech: null,
+					transliterations: null, //If no transliterations exist, value should be null
+					distractors: ['使う', '動かす、引っ越す', '電話する', '～のように見える・思われる','与える', '好き', '行く', '見える', '住む、生きる']
+				},
+				
+			}
+			
+		};
+		
+		// Image item
+		var item_image = {
+			
+			id: 944789,
+
+			progress: {
+				percentage: 0,
+				urgency: 0,
+				skipped: false
+			},
+			
+			cue: {
+				type: 'image', // text/image/sound/video
+				
+				content: {
+					text: '<p>544,000 trees are used in a 70-sheet roll of virgin fiber paper towels.<br />Trees are like lungs for the earth. A mature leafy tree produces as much oxygen in a season as ten people inhale in a year. (source: <a href="http://earththreat.org">earththreat.org</a>) and research published in Nature Magazine concludes almost one-fifth of our fossil fuel emissions are absorbed by forests across Africa, Amazonia and Asia. (source: Fifth of world carbon emissions soaked up by extra forest growth, scientists find Guardian Feb 18, 2009)</p><p>Don’t reach for a paper towel. Cut up old clothes and use the rags to soak up spills.</p>',
+					image: 'http://assets0.smart.fm/assets/users/ecodemo/21f0a7b8.jpg',
+					sound: 'http://assets3.smart.fm/assets/users/ecodemo/7l2c87bl2nhbc.mp3',
+					video: null
+				},
+				
+				related: {
+					language: 'en',
+					character: null,
+					part_of_speech: 'None',
+					transliterations: null, //If no transliterations exist, value should be null
+					distractors: ['http://assets0.smart.fm/assets/users/ecodemo/a14077b8.jpg', 'http://assets0.smart.fm/assets/users/ecodemo/0180c758.jpg', 'http://assets3.smart.fm/assets/users/ecodemo/c1d067f8.jpg', 'http://assets2.smart.fm/assets/users/ecodemo/512077e8.jpg'],
+					sentences: null
+				},
+				
+			},
+			
+			response: {
+				type: 'text', // text/image/sound/video
+				
+				content: {
+					text: 'Save 544,000 trees.',
+					image: null, // if content type doesn't exist more item, value should be null
+					sound: 'http://assets1.smart.fm/assets/users/ecodemo/1lda3n5c6k0v0.mp3',
+					video: null
+				},
+				
+				related: {
+					language: 'en',
+					character: null,
+					part_of_speech: null,
+					transliterations: null, //If no transliterations exist, value should be null
+					distractors: ['46,000 pieces of plastic litter every square mile of ocean.', '75% of electricity used while appliances are in standby mode.', 'The distance food travels has an impact on the environment.', 'Save 11 liters of water.']
+				},
+				
+			}
+			
+		};
+		
+		var quiz = new smart.quizzes.multipleChoice(item, 1);
+		
+		$(document).ready(function() {
+
+			switch(quiz.content.type) {
+				case 'text':
+					var question = quiz.content.question;
+					break;
+				case 'image':
+					var question = '<img src="'+quiz.content.image+'">';
+			}
+			
+			$('div.recall h1').html(question);
+			$('div.recall h2').html(quiz.content.recall);
+			
+			for (var i=0; i < quiz.items.length; i++) {
+
+				switch(quiz.distractorType) {
+					case 'text':
+						var item = quiz.items[i];
+						break;
+					case 'image':
+						var item = '<img src="'+quiz.items[i]+'">';
+						break;
+				}
+				
+				$('<p></p>').html(item).appendTo('div.items');
+			};
+			
+			if(quiz.items.length == 10) {
+				$('div.items').css('marginTop', -220);
+			} else {
+				$('div.items').css('marginTop', -110);
+			}
+			
+		});
+		
+	</script>
+	
+</head>
+<body>
+	
+	<div class="recall">
+
+
+		
+		<h1></h1>
+		<h2></h2>
+		
+	</div>
+	
+	<div class="quiz">
+
+		<div class="items"></div>		
+	
+	</div>
+	
+
+
+</body>
+</html>
