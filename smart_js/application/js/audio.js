@@ -21,6 +21,7 @@ iknow.audio = {
 				iknow.audio.load(uri[i]);
 			};
 		} else {
+		  console.log('Loading: '+uri);
 			if(window.Audio && !$.browser.mozilla) { // use HTML5 audio if possible
 
 				iknow.audio.cache[uri+(async ? iknow.audio.asyncer : '')] = new Audio(uri);
