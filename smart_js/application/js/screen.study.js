@@ -6,8 +6,13 @@ var study = {
 
 			var part = iknow.session.item[side];
 			var html = '<div style="'+(side=="response" ? "display:none;":"")+'" class="item-card-inner-'+side+' cue-'+part.type+'-quiz"><div class="item-'+side+'">';
-				if(part.content.sound) html += '<span class="'+side+'-audio"><a href="'+part.content.sound+'" class="fg-button ui-state-default ui-corner-all">play</a></span>';
-				if(part.content.text) html += '<span class="'+side+'-text">'+part.content.text+'</span>';
+				
+				if(part.content.sound)
+					html += '<span class="'+side+'-audio"><a href="'+part.content.sound+'" class="fg-button ui-state-default ui-corner-all">play</a></span>';
+				
+				if(part.type == '' || part.content.text)
+					html += iknow.getTextMarkup(part);
+				
 				if(part.content.image) {
 					
 					var data = smart.session.preloaded[part.content.image];
@@ -40,7 +45,49 @@ var study = {
 	populateStudyTab: function() {
 
 		// fill the study tab
-		$("#item-card").html(study.templates.flipside('response') + study.templates.flipside('cue'));
+		$("#item-card")
+			.css('visibility', 'hidden')
+			.html(study.templates.flipside('response') + study.templates.flipside('cue'));
+		
+		
+		//Fly over animation for studying
+		var item = iknow.session.item;
+		$('div.flyover').remove();
+		$('<div class="flyover">'+(item.cue.type == 'image' ? '<img src="'+item.cue.content.image+'">' : iknow.getTextMarkup(item.cue))+'</div>')
+			.css({ top: '50%', left: '10%', marginTop: '-1em', opacity: 0 })
+			.appendTo($("#item-card").parent())
+			.animate({ left: '50%', opacity: 1 }, { duration: 1000, easing: 'easeOutExpo' })
+			.animate({ left: '90%', opacity: 0 }, { duration: 1000, easing: 'easeInExpo', complete: function() {
+				
+				$(this)
+					.clone().appendTo(this.parentNode)
+					.html((item.response.type == 'image' ? '<img src="'+item.response.content.image+'">' : iknow.getTextMarkup(item.response)))
+					.css({ left: '10%', opacity: 0 })
+					.animate({ left: '50%', opacity: 1 }, { duration: 1000, easing: 'easeOutExpo' })
+					.animate({ left: '90%', opacity: 0 }, { duration: 1000, easing: 'easeInExpo', complete: function() {
+					
+						$('div.flyover:eq(1)')
+							.css({ left: '10%', marginTop: '1em' })
+							.animate({ left: '50%', opacity: 1 }, { duration: 1000, easing: 'easeOutExpo' })
+							
+						$('div.flyover:eq(0)')
+							.css({ marginTop: '-2em' })
+							.animate({ left: '50%', opacity: 1 }, { duration: 1000, easing: 'easeOutExpo', complete: function() {
+								
+								$('div.flyover').animate({ opacity: 0 }, 1000, function() { $(this).remove(); });
+								
+								$('#item-card')
+									.css({ opacity: 0, visibility: 'visible' })
+									.animate({ opacity: 1 }, 1000);
+								
+							} });
+							
+						
+					}
+					});
+			
+			}
+			});
 		
 	},
 	

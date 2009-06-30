@@ -42,16 +42,16 @@ var quiz = {
 		distractor: function(d) {
 			switch(iknow.session.quiz.distractorType) {
 				case 'text':
-					var inner = d;
+					var inner = iknow.getText(d);
 					break;
 				case 'image':
-					var inner = quiz.templates.distractorImage(d);
+					var inner = quiz.templates.distractorImage(d.content.image);
 					break;
 				case 'sound':
 					// TODO
 					break;
 			};
-			return '<button type="button" class="fg-button ui-state-default ui-corner-all '+(d == iknow.session.quiz.correctChoice ? 'correct' : '')+'">'+inner+'</button>'
+			return '<button type="button" class="fg-button ui-state-default ui-corner-all '+(d.content[iknow.session.quiz.distractorType] == iknow.session.quiz.correctChoice.content[iknow.session.quiz.distractorType] ? 'correct' : '')+'">'+inner+'</button>'
 		}
 	},
 	
@@ -76,7 +76,7 @@ var quiz = {
 		
 		//Append new distractors
 		var innerContainer = $('> div', container)
-			.addClass('d-'+(iknow.session.quiz.items.length == 4 ? 5 : 10))
+			.addClass('d-'+(iknow.session.quiz.items.length <= 4 ? 5 : 10))
 			.addClass('multiple-choice-' + iknow.session.quiz.distractorType);
 			
 		for (var i=0; i < iknow.session.quiz.items.length; i++) {
@@ -121,7 +121,7 @@ var quiz = {
 				zIndex: 2,
 				fontFamily: 'Monaco'
 			})
-			.css('width', (iknow.session.item.cue.content.text.length * spacing)+'em');
+			.css('width', (iknow.session.quiz.correctChoice.length * spacing)+'em');
 			
 		$('div.enter-missing-quiz div.dictation-bars')
 			.empty()
@@ -134,8 +134,8 @@ var quiz = {
 				color: 'transparent'
 			});
 			
-		for (var i=0; i < iknow.session.item.cue.content.text.length; i++) {
-			$('<span>'+iknow.session.item.cue.content.text[i]+'<span></span></span>')
+		for (var i=0; i < iknow.session.quiz.correctChoice.length; i++) {
+			$('<span>'+iknow.session.quiz.correctChoice[i]+'<span></span></span>')
 				.css({
 					fontSize: '2em',
 					position: 'relative'
@@ -227,7 +227,7 @@ var quiz = {
 		iknow.result = -1;
 		$('div.session-footer-panel div.right-button').find("a").text('Review again').end().show().find('a').delayedFocus();
 		
-		iknow.audio.play('media/sounds/spell_wrong.mp3');	
+		iknow.audio.play(iknow.base + 'media/sounds/spell_wrong.mp3');	
 			
 	},
 	
@@ -245,10 +245,10 @@ var quiz = {
 
 					switch(iknow.session.quiz.distractorType) {
 						case 'image':
-							picked.html(quiz.templates.distractorImage(iknow.session.quiz.correctChoice));				
+							picked.html(quiz.templates.distractorImage(iknow.session.quiz.correctChoice.content[iknow.session.quiz.distractorType]));				
 							break;
 						case 'text':
-							picked.html(iknow.session.quiz.correctChoice);
+							picked.html(iknow.session.quiz.distractorType == 'text' ? iknow.getText(iknow.session.quiz.correctChoice) : iknow.session.quiz.correctChoice.content[iknow.session.quiz.distractorType]);
 							break;
 					}
 
@@ -294,7 +294,7 @@ var quiz = {
 		iknow.result = 1;
 		$('div.session-footer-panel div.right-button').find("a").text('Next').end().show().find('a').delayedFocus();
 		
-		iknow.audio.play('media/sounds/spell_end.mp3');
+		iknow.audio.play(iknow.base + 'media/sounds/spell_end.mp3');
 
 	}
 	

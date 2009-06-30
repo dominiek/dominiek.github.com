@@ -33,8 +33,12 @@ var recall = {
 	
 		html += '<img style="'+style+'" src="'+q.content.image+'">';
 	}
-	if(q.content.text) html += '<span class="cue-text">'+q.content.text+'</span>';
-	if(q.content.sound) iknow.audio.play(q.content.sound);
+	
+	if(q.type == 'text' || q.content.text)
+		html += iknow.getTextMarkup(iknow.session.item[q.config.direction], q);
+		
+	if(q.content.sound)
+		iknow.audio.play(q.content.sound);
 
     $('div.session-recall-inner div.item-cue')
 		.removeClass('item-cue-text item-cue-image item-cue-sound item-cue-video')

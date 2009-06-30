@@ -1,5 +1,5 @@
 if(!window.Audio || $.browser.mozilla) { //Stupid Firefox doesn't support mp3 playback
-	$('head').prepend('<script src="http://dominiek.github.com/smart_js/vendor/soundmanager2/script/soundmanager2-nodebug-jsmin.js"></script>'); //this is synchroneous
+	$('head').prepend('<script src="'+iknow.base+'../vendor/soundmanager2/script/soundmanager2-nodebug-jsmin.js"></script>'); //this is synchroneous
 	//$.getScript("../vendor/soundmanager2/script/soundmanager2-nodebug-jsmin.js");
 }
 
@@ -12,8 +12,9 @@ $(document).ready(function() {
 
 iknow.audio = {
 	
-	load: function(uri) {
-	  return false;
+	asyncer: 0,
+	
+	load: function(uri, async) {
 		
 		if(typeof uri == 'array') {
 			for (var i=0; i < uri.length; i++) {
@@ -22,10 +23,10 @@ iknow.audio = {
 		} else {
 			if(window.Audio && !$.browser.mozilla) { // use HTML5 audio if possible
 
-				iknow.audio.cache[uri] = new Audio(uri);
+				iknow.audio.cache[uri+(async ? iknow.audio.asyncer : '')] = new Audio(uri);
 					
 			} else { // defer to SoundManager 2 (Flash)
-				iknow.audio.cache[uri] = soundManager.createSound({
+				iknow.audio.cache[uri+(async ? iknow.audio.asyncer : '')] = soundManager.createSound({
 					id: uri,
 					url: uri
 				});
@@ -34,13 +35,14 @@ iknow.audio = {
 		
 	},
 	
-	play: function(uri) {
-	  return false;
+	play: function(uri, async) {
 		
-		if(!iknow.audio.cache[uri])
-			iknow.audio.load(uri);
+		if(async) iknow.audio.asyncer++;
 		
-		iknow.audio.cache[uri].play();
+		if(!iknow.audio.cache[uri+(async ? iknow.audio.asyncer : '')])
+			iknow.audio.load(uri, async);
+		
+		iknow.audio.cache[uri+(async ? iknow.audio.asyncer : '')].play();
 		
 	},
 	

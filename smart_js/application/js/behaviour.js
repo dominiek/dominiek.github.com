@@ -11,13 +11,13 @@ $(document).ready(function() {
 	
 	// button click actions
 	$('div.session-footer-panel div.right-button a').bind('click', function() {
-		iknow.audio.play('http://dominiek.github.com/smart_js/application/media/sounds/spell_press.mp3');
+		iknow.audio.play(iknow.base + 'media/sounds/spell_press.mp3');
 		iknow.session.next(iknow.result != undefined ? iknow.result : 1);
 		return false;
 	});
 	
 	$('div.session-footer-panel div.fg-buttonset button').bind('click', function() {
-		iknow.audio.play('http://dominiek.github.com/smart_js/application/media/sounds/spell_press.mp3');
+		iknow.audio.play(iknow.base + 'media/sounds/spell_press.mp3');
 		iknow.session.next($(this).parent().find('button').index(this)-1);
 		return false;
 	});
@@ -51,7 +51,7 @@ $(document).ready(function() {
 			var index = list.index(iknow.currentFocus) + 1;
 			var even = index/2 == parseInt(index/2);
 			
-			if(list.length > 5) {
+			if(list.length > 5 || iknow.session.quiz.distractorType == 'image') {
 
 	  			switch(event.keyCode) {
 	  				case 37:
@@ -64,7 +64,10 @@ $(document).ready(function() {
 	  					if(index - 2 >= 0) iknow.currentFocus.prev().prev().delayedFocus();
 	  					break;
 	  				case 40: //down
-	  					if(index + 2 <= list.length) iknow.currentFocus.next().next().delayedFocus();
+	  					if(index + 2 <= list.length)
+							iknow.currentFocus.next().next().delayedFocus();
+						else
+							iknow.currentFocus.next().delayedFocus()
 	  					break;
 	  			}
 	
@@ -87,8 +90,21 @@ $(document).ready(function() {
 		}
 		
 		// spell quizzing
-		if(iknow.session.state == 'quiz' && iknow.session.quiz.type == 'spelling' && event.keyCode == 13) {
-			quiz.checkSpelling();
+		if(iknow.session.state == 'quiz' && iknow.session.quiz.type == 'spelling') {
+			if(event.keyCode == 13) quiz.checkSpelling();
+			if(event.keyCode != 13 && iknow.currentFocus.is('input')) {
+				
+				iknow.audio.play(iknow.base + 'media/sounds/spell_press.mp3', true);
+				
+				$('div.dictation-bars > span').eq(iknow.currentFocus.val().length)
+					.stop().animate({
+						top: '+=10'
+					}, { duration: 300, easing: 'swing' })
+					.animate({
+						top: '-=10'
+					}, { duration: 500, easing: 'easeOutBack' });
+					
+			}
 		}
 		
 		// study
@@ -131,6 +147,41 @@ $(document).ready(function() {
 			$(this).removeClass("ui-state-active");
 		}
 	});
+
+	// card flip (small)
+    function mySideChange(front) {
+        if (front) {
+            
+			$('div.item-card-inner-cue, div.border-front, div.item-progress', this.parentNode).show();
+			$('div.item-card-inner-response, div.border-back', this.parentNode).hide();
+
+            $('div.small-card-inner', this.parentNode).css({
+				backgroundColor: "#237fcc",
+				backgroundImage: "../vendor/smartfm/smartness/images/flipcard_background.png",
+				backgroundPosition: "50% 50%",
+				backgroundRepeat: "repeat-x"
+			});
+
+        } else {
+
+			$('div.item-card-inner-cue, div.border-front, div.item-progress', this.parentNode).hide();
+			$('div.item-card-inner-response, div.border-back', this.parentNode).show();
+
+            $(this).parent().find('div.small-card-inner').css({
+				backgroundColor: "#1b5a8e",
+				//backgroundImage: 'none'
+			});
+        }
+    }
+
+    $('div.small-card').live('click', function () {
+		if($('div.item-card-inner-cue', this).is(':visible')) {
+			$(this).find('> div').stop().rotate3Di('flip', 250, {direction: 'clockwise', sideChange: mySideChange});
+		} else {
+			$(this).find('> div').stop().rotate3Di('unflip', 250, {sideChange: mySideChange});
+		}
+	});	
+
 	
 	//card flip
 	$("div.large-card").live('click', function(){
@@ -143,7 +194,7 @@ $(document).ready(function() {
 		var position = self.position();
 		var flipper = $('<div class="flipper"></div>')
 			.css({
-				background: 'url(http://dominiek.github.com/smart_js/vendor/smartfm/smartness/images/ui_card_flip.png) no-repeat 0 0',
+				background: 'url('+iknow.base+'../vendor/smartfm/smartness/images/ui_card_flip.png) no-repeat 0 0',
 				width:this.offsetWidth + (this.offsetWidth/8) ,
 				height: this.offsetHeight,
 				position: 'absolute',

@@ -19,59 +19,34 @@ var smart = {
 	/* list loading */
 
 	loadDefaults: {
-		user: null,
 		list: null,
+		token: null,
 		limit: 10,
 		sort: 'urgent',
 		order: 'asc',
 		min_progress: 0,
 		max_progress: 100,
-		server: 'http://api.smart.fm'
+		server: 'smart.fm'
 	},	
 	load: function(options, callback, scope) {
 		
 		var o = $.extend({}, smart.loadDefaults, options),
 			self = this;
-		
-		if(o.user) {
-		
-			if(typeof o.list == 'number') { // load items from a certain list
-				
-			} else { // load all learned items
 
-				$.getJSON(o.server + '/users/' + o.user + '/items.json?'
-					+'sort=' + o.sort
-					+'&ascending=' + (o.order == 'asc')
-					+'&min_progress=' + o.min_progress
-					+'&max_progress=' + o.max_progress
-					+'&include_sentences=false'
-					+'&per_page=' + o.limit
-					+'&callback=?'
-				, function(data) {
-					callback && callback.call(scope, data);
-					smart.trigger('load', scope, [data]);
-				});
-				
-			}
-
-		} else { // anonymous session
-
-			if(typeof o.list == 'number') {
-
-				$.getJSON(o.server + '/lists/' + o.list + '/items.json?'
-					+'include_sentences=false'
-					+'&per_page=' + o.limit
-					+'&callback=?'
-				, function(data) {
-					callback && callback.call(scope, data);
-					smart.trigger('load', scope, [data]);
-				});
-			
-			} else { //bail
-				throw "smart.session can't load data without any user/list information";
-			}
-			
-		}
+		$.getJSON('http://api.' + o.server + '/study/index.json?'
+			+'sort=' + o.sort
+			+'&ascending=' + (o.order == 'asc')
+			+'&min_progress=' + o.min_progress
+			+'&max_progress=' + o.max_progress
+			+'&include_sentences=false'
+			+'&per_page=' + o.limit
+			+(typeof o.list == 'number' ? '&list_id=' + o.list : '')
+			+(o.token ? '&token=' + o.token : '')
+			+'&callback=?'
+		, function(data) {
+			callback && callback.call(scope, data);
+			smart.trigger('load', scope, [data]);
+		});
 
 	},
 	
@@ -112,6 +87,9 @@ var smart = {
 			quiz.type = random[0];
 			return quiz;
 		} else {
+			console.log(difficulty, item, item.cue.type);
+			console.log('if the difficulty is not bidirectional, cue type must match supported types: ', $.inArray(difficulty, smart.quizzes['multipleChoice'].bidirectional) == -1, $.inArray(item.cue.type, smart.quizzes['multipleChoice'].supports) != -1);
+			console.log('if the difficulty is bidirectional, response type must match supported types: ', smart.quizzes['multipleChoice'].bidirectional, $.inArray(difficulty, smart.quizzes['multipleChoice'].bidirectional) != -1, $.inArray(item.response.type, smart.quizzes['multipleChoice'].supports) != -1);
 			throw 'smart.getRandomByQuiz wasn\'t able to find any quizzes for this item - try loading more quiz types';
 		}
 		

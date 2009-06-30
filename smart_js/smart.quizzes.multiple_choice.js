@@ -25,13 +25,20 @@ smart.quizzes.multipleChoice = function(item, difficulty, direction) {
 	this.config.timeout = ({ 1: 6000, 2: 6000, 3: 6000 })[difficulty];
 	this.config.direction = ({ 1: 'cue', 2: 'cue', 3: 'response' })[difficulty];
 	
+
+	
 	// Assign distractors and distractors+item
 	this.distractorType = this.item[this.config.direction == 'cue' ? 'response' : 'cue'].type;
+	
+	//We can't have d-10 quizzes on images
+	if(this.config.distractors == 9 && this.distractorType == "image")
+		this.config.distractors = 4;
+	
 	this.distractors = this._getRandomizedDistractors(this.config.distractors); //TODO: Mixin 'none of the above' randomly
 	
-	this.noneOfTheAbove = Math.round(Math.random());
-	this.items = !this.noneOfTheAbove || !this.options.noneOfTheAbove ? this._randomizedMixin(this.distractors, this.item[this.config.direction == 'cue' ? 'response' : 'cue'].content[this.item[this.config.direction == 'cue' ? 'response' : 'cue'].type]) : this.distractors;
-	this.correctChoice = this.item[this.config.direction == 'cue' ? 'response' : 'cue'].content[this.item[this.config.direction == 'cue' ? 'response' : 'cue'].type];
+	this.noneOfTheAbove = Math.random() < 0.3;
+	this.items = !this.noneOfTheAbove || !this.options.noneOfTheAbove ? this._randomizedMixin(this.distractors, this.item[this.config.direction == 'cue' ? 'response' : 'cue']) : this.distractors;
+	this.correctChoice = this.item[this.config.direction == 'cue' ? 'response' : 'cue'];
 	
 	
 	// Assign content
@@ -82,7 +89,7 @@ $.extend(smart.quizzes.multipleChoice.prototype, {
 		// if it is a complex item, we flatten it by type
 		if(list[0].cue) {
 			list = $.map(list, function(a, b) {
-				return a[self.config.direction == 'cue' ? 'response' : 'cue'].content[self.distractorType];
+				return a[self.config.direction == 'cue' ? 'response' : 'cue'];
 			});
 		}
 		

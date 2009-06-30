@@ -4,6 +4,9 @@ $(document).ready(function(){
 
 var iknow = {
 	
+	base: '',
+	mode: (['full','kana', 'romaji'])[2],
+	
 	cacheAlignments: function() {
 		
 		//Calculate the parent offsets of alignment containers
@@ -23,13 +26,18 @@ var iknow = {
 	init: function() {
 
 		// resolve the url query into a hash
-		var query = window.location.href.split('?'), params = { list: 705 };
+		var query = window.location.href.split('?');
+		iknow.params = { list: 705 };
 		if(query[1]) $($.map(query[1].split('&'), function(a) { return [a.split('=')]; })).each(function() {
-			params[this[0]] = this[1];
+			iknow.params[this[0]] = this[1];
 		});
 
 		// create the smartjs session
-		iknow.session = new smart.session({adaptiveClearance:true, study:'recall'});
+		iknow.session = new smart.session({
+			adaptiveClearance: true,
+			study: 'recall'
+			//recall: false
+		});
 		
 		iknow.session.bind('ready', iknow.ready);
 		iknow.session.bind('error', iknow.error);
@@ -37,10 +45,8 @@ var iknow = {
 		iknow.session.bind('end', iknow.end);
 
 		// load data into the session (which then fires the 'ready' event)
-		iknow.session.load(json_images || {
-			list: parseInt(params.list),
-			user: params.user
-		});
+		//iknow.session.load(json_images);
+		iknow.session.load({ list: parseInt(iknow.params.list), token: iknow.params.token, server: 'testing.smart.fm' });
 
 		// initialize top session progress
 		$("#progressbar").progressbar({ value: 0 });
@@ -67,9 +73,14 @@ var iknow = {
 
 		// run the timer in the top bar
 		iknow.runTimer();
-	
+
 		// populate the preview
-		preview.populate();
+		if(iknow.params.preview != 'false') {
+			preview.populate();
+		} else {
+			iknow.session.next(1);
+		}
+		
 		
 	},
 	
@@ -98,6 +109,7 @@ var iknow = {
 	
 	_hideCurrent: function() {
 		$("div.session-main-panel > div, div.session-footer-panel > *").hide();
+		$('div:animated').stop();
 	},
 	
 	// this runs the timer in the top bar
@@ -119,6 +131,90 @@ var iknow = {
 	},
 	stopTimer: function() {
 		window.clearInterval(iknow.sessionTimer);
+	}
+	
+};
+
+
+iknow.getTextMarkup = function(side, quiz) {
+	
+	var html = '',
+		mode = iknow.mode;
+	
+	// kana mode: hrkt
+	// full mode: hrkt, text ?
+	// romaji mode: latn
+	
+	switch(side.related.language) {
+		
+		case 'ja':
+			
+			switch(mode) {
+				
+				case 'full':
+				
+					var first = (side.related.transliterations['Hrkt'] || side.content.text || side.related.transliterations['Hira']);
+					html += '<span class="cue-text">'+first;
+					if(first != side.content.text && side.content.text != '') html += '<em>【'+side.content.text+' 】</em>';
+					html += '</span>';
+					break;
+					
+				case 'kana':
+
+					html += '<span class="cue-text">'+(side.related.transliterations['Hrkt'] || side.related.transliterations['Hira'] || side.content.text)+'</span>';
+					break;
+					
+				case 'romaji':
+
+					html += '<span class="cue-text">'+side.related.transliterations['Latn'];
+					html += '<em>【'+(side.related.transliterations['Hrkt'] || side.related.transliterations['Hira'] || side.content.text)+' 】</em>';
+					html += '</span>';
+					break;
+				
+			}
+			
+			break;
+			
+		default:
+			html += '<span class="cue-text">'+side.content.text+'</span>';
+			break;
+		
+	}
+	
+	return html;
+	
+};
+
+iknow.getText = function(side) {
+	
+	var mode = iknow.mode;
+	
+	// kana mode: hrkt
+	// full mode: hrkt, text ?
+	// romaji mode: latn
+	
+	switch(side.related.language) {
+		
+		case 'ja':
+			
+			switch(mode) {
+				
+				case 'full':
+					return side.related.transliterations['Hrkt'] || side.content.text || side.related.transliterations['Hira'];
+					
+				case 'kana':
+					return (side.related.transliterations['Hrkt'] || side.related.transliterations['Hira'] || side.content.text);
+					
+				case 'romaji':
+					return side.related.transliterations['Latn'];
+				
+			}
+			
+			break;
+			
+		default:
+			return side.content.text;
+		
 	}
 	
 };

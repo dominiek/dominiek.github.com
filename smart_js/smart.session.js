@@ -33,8 +33,7 @@ $.extend(smart.session, {
 	loadDefaults: $.extend(smart.loadDefaults, {
 		preload: {
 			images: true,
-			sound: false,
-			timeout: 5000
+			timeout: false
 		}
 	})
 });
@@ -250,79 +249,88 @@ $.extend(smart.session.prototype, {
 	
 	//List loading
 	
-	_prepareData: function(data) {
+	_resolveRelativeUrls: function(item) {
 		
+		if(item.cue.content.image && item.cue.content.image.indexOf('http://') == -1) item.cue.content.image = 'http://' + this.loadOptions.server + item.cue.content.image;
+		if(item.response.content.image && item.response.content.image.indexOf('http://') == -1) item.response.content.image = 'http://' + this.loadOptions.server + item.response.content.image;
+		if(item.cue.content.sound && item.cue.content.sound.indexOf('http://') == -1) item.cue.content.sound = 'http://' + this.loadOptions.server + item.cue.content.sound;
+		if(item.response.content.sound && item.response.content.sound.indexOf('http://') == -1) item.response.content.sound = 'http://' + this.loadOptions.server + item.response.content.sound;
+		//TODO: Resolve sentence pictures + audio
+		
+	},
+	
+	_resolveDistractors: function(item) {
+		
+		var self = this;
+		
+		if(!isNaN(item.cue.related.distractors[0])) { // if the distractors are id's, we need to resolve them
+			item.cue.related.distractors = $.map(item.cue.related.distractors, function(a) {
+				return self.distractors[a];
+			});
+		}
+		
+		if(!isNaN(item.response.related.distractors[0])) { // if the distractors are id's, we need to resolve them
+			item.response.related.distractors = $.map(item.response.related.distractors, function(a) {
+				return self.distractors[a];
+			});
+		}
+		
+	},
+	
+	_transformTransliterations: function(item) {
+
+		if(item.cue.related.transliterations) {
+			var t = item.cue.related.transliterations;
+			item.cue.related.transliterations = {};
+			for (var i=0; i < t.length; i++) {
+				item.cue.related.transliterations[t[i].type] = t[i].text; 
+			};
+		}
+		
+		if(item.response.related.transliterations) {
+			var t = item.response.related.transliterations;
+			item.response.related.transliterations = {};
+			for (var i=0; i < t.length; i++) {
+				item.response.related.transliterations[t[i].type] = t[i].text; 
+			};
+		}
+		
+	},
+	
+	_prepareData: function(data) {
+	
 		var isInit = !this.items,
 			self = this;
-		this.items = data.items || data;
+		this.items = data.items;
+		this.distractors = data.distractors;
 		
-		//TODO: The following transforms the current into the new API style
-		if(!data.items) {
-			var items = [];
-			for (var i=0; i < this.items.length; i++) {
-				if(!this.items[i].responses[0].quizzes || !this.items[i].responses[0].quizzes[0].distractors) continue; //TODO: API bug, some items have no quizzess
-				items.push({
-					id: this.items[i].id,
-					cue: {
-						type: this.items[i].cue.type,
-						content: {
-							image: this.items[i].cue.image,
-							text: this.items[i].cue.text,
-							sound: this.items[i].cue.sound,
-							video: null
-						},
-						related: {
-							language: this.items[i].cue.language,
-							character: this.items[i].cue.character,
-							part_of_speech: this.items[i].cue.part_of_speech,
-							transliterations: this.items[i].cue.transliterations,
-							distractors: this.items[i].responses[0].quizzes[0].distractors,
-							sentences: null 
-						}
-					},
-					response: {
-						type: 'text',
-						content: {
-							image: null,
-							text: this.items[i].responses[0].text,
-							sound: null,
-							video: null
-						},
-						related: {
-							language: this.items[i].responses[0].language,
-							character: null,
-							part_of_speech: null,
-							transliterations: null,
-							distractors: this.items[i].responses[0].quizzes[0].distractors, //TODO: Those are the wrong distractors here
-							sentences: null						
-						}
-					},
-					progress: {
-						percentage: 0,
-						urgency: 0,
-						skipped: false
-					}
-				});
+		// if we have distractors outside the actual items, resolve them into a hash
+		if(this.distractors) {
+			var d = this.distractors;
+			this.distractors = {};
+			for (var i=0; i < d.length; i++) {
+				this._resolveRelativeUrls(d[i]);
+				this._transformTransliterations(d[i]);
+				this.distractors[d[i].id] = d[i];
 			};
-		
-			this.items = items;
 		}
 		
 		// If the item doesn't come with a progress (i.e. anonymous login), we
 		// assign a progress of 0 to each
 		$(this.items).each(function() {
 			
-			if(!isNaN(this.cue.related.distractors[0])) { // if the distractors are id's, we need to resolve them
-				this.cue.related.distractors = $.map(this.cue.related.distractors, function(a) {
-					return data.distractors[a];
-				});
-			}
+			// resolve distractors
+			self._resolveDistractors(this);
 			
-			if(!isNaN(this.response.related.distractors[0])) { // if the distractors are id's, we need to resolve them
-				this.response.related.distractors = $.map(this.response.related.distractors, function(a) {
-					return data.distractors[a];
-				});
-			}
+			// we don't want type == 'meaning' in response
+			if(this.response.type == "meaning")
+				this.response.type = "text";
+				
+			//we need to resolve all relative urls
+			self._resolveRelativeUrls(this);
+			
+			//transform transliterations to a hash
+			self._transformTransliterations(this);
 			
 			$.extend(this, {
 				_touched: 0,
@@ -341,13 +349,11 @@ $.extend(smart.session.prototype, {
 
 		// 'ready' is only called once after the first items have been loaded
 		if(isInit) {
-			
 			if(this.loadOptions.preload) {
 				this.preload();
 			} else {
 				self.trigger('ready');
 			}
-			
 		}
 		
 	},
@@ -372,7 +378,6 @@ $.extend(smart.session.prototype, {
 				total++;
 				var img = new Image();
 				img.src = url;
-				
 				$('<img src="'+url+'">')
 					.css({ visibility: 'hidden', position: 'absolute', top: -1000, left: -1000 })
 					.appendTo('body')
@@ -393,13 +398,16 @@ $.extend(smart.session.prototype, {
 				if(this.items[i].response.content.image) preloadImage(this.items[i].response.content.image);
 			}
 			
-			if(this.loadOptions.preload.sound) {
-				if(this.items[i].cue.content.sound) iknow.audio.load(this.items[i].cue.content.sound);
-				if(this.items[i].response.content.sound) iknow.audio.load(this.items[i].response.content.sound);
-			}
-			
 		};
 		
+		if(this.distractors) {
+			for (var i in this.distractors) {
+				if(this.loadOptions.preload.images) {
+					if(this.distractors[i].cue.content.image) preloadImage(this.distractors[i].cue.content.image);
+					if(this.distractors[i].response.content.image) preloadImage(this.distractors[i].response.content.image);
+				}
+			};
+		}
 
 		
 		var self = this;
