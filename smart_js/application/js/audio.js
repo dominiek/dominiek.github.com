@@ -15,13 +15,13 @@ iknow.audio = {
 	asyncer: 0,
 	
 	load: function(uri, async) {
+	  return;
 		
 		if(typeof uri == 'array') {
 			for (var i=0; i < uri.length; i++) {
 				iknow.audio.load(uri[i]);
 			};
 		} else {
-		  console.log('Loading: '+uri);
 			if(window.Audio && !$.browser.mozilla) { // use HTML5 audio if possible
 
 				iknow.audio.cache[uri+(async ? iknow.audio.asyncer : '')] = new Audio(uri);
@@ -38,6 +38,8 @@ iknow.audio = {
 	
 	play: function(uri, async) {
 		
+  	return;
+  	  
 		if(async) iknow.audio.asyncer++;
 		
 		if(!iknow.audio.cache[uri+(async ? iknow.audio.asyncer : '')])
