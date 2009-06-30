@@ -46,7 +46,7 @@ var iknow = {
 
 		// load data into the session (which then fires the 'ready' event)
 		//iknow.session.load(json_images);
-		iknow.session.load({ list: parseInt(iknow.params.list), token: iknow.params.token, server: 'testing.smart.fm' });
+		//iknow.session.load({ list: parseInt(iknow.params.list), token: iknow.params.token, server: 'testing.smart.fm' });
 
 		// initialize top session progress
 		$("#progressbar").progressbar({ value: 0 });
