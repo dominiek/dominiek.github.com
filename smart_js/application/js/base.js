@@ -8,18 +8,24 @@ var iknow = {
 	mode: (['full','simple', 'latin', 'kanji'])[0],
 	
 	cacheAlignments: function() {
+	  
+	  console.log('hello 1');
 		
 		//Calculate the parent offsets of alignment containers
 		var p = $('#calculate-preview'),
 			r = $('#calculate-recall'),
 			s = $('#calculate-study'),
 			q = $('#calculate-quiz');
+			
+	  console.log('hello 2');
 
 		iknow.alignments = {};
 		iknow.alignments.preview = { width: p[0].offsetWidth, height: p[0].offsetHeight };
 		iknow.alignments.recall = { width: r[0].offsetWidth, height: r[0].offsetHeight };
 		iknow.alignments.study = { width: s[0].offsetWidth, height: s[0].offsetHeight };
 		iknow.alignments.quiz = { width: q[0].offsetWidth, height: q.innerHeight() };
+
+	  console.log('hello 3');
 		
 	},
 	
@@ -43,8 +49,6 @@ var iknow = {
 	
 	
 	init: function() {
-	  
-	  console.log('1');
 
 		// resolve the url query into a hash
 		var query = window.location.href.split('?');
@@ -52,13 +56,9 @@ var iknow = {
 		if(query[1]) $($.map(query[1].split('&'), function(a) { return [a.split('=')]; })).each(function() {
 			iknow.params[this[0]] = this[1];
 		});
-		
-	  console.log('2');
 
 		// default to en for loading (if not passed from params)
 		iknow.changeLanguageTo(iknow.params.lang || 'en');
-		
-	  console.log('3');
 
 		// create the smartjs session
 		iknow.session = new smart.session({
@@ -70,28 +70,14 @@ var iknow = {
 			//recall: false
 		});
 		
-		
-	  console.log('4');
-		
 		iknow.session.bind('ready', iknow.ready);
 		iknow.session.bind('error', iknow.error);
 		iknow.session.bind('next', iknow.next);
 		iknow.session.bind('end', iknow.end);
 
-		// load data into the session (which then fires the 'ready' event)
-		//iknow.session.load(json_images);
-		//iknow.session.load({
-		//	list: parseInt(iknow.params.list),
-		//	token: iknow.params.token, server: 'smart.fm'
-		//});	
-		
-		
-	  console.log('5');
 
 		iknow.cacheAlignments();
 		iknow._hideCurrent();
-		
-	  console.log('6');
 
 		// initialize top session progress
 		$("#progressbar").progressbar({ value: 0 });
