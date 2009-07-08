@@ -17,7 +17,7 @@ var iknow = {
 			s = $('#calculate-study'),
 			q = $('#calculate-quiz');
 			
-	  console.log('hello 2');
+	  console.log(p,r,s,q);
 
 		iknow.alignments = {};
 		iknow.alignments.preview = { width: p[0].offsetWidth, height: p[0].offsetHeight };
