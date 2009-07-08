@@ -43,6 +43,8 @@ var iknow = {
 	
 	
 	init: function() {
+	  
+	  console.log('1');
 
 		// resolve the url query into a hash
 		var query = window.location.href.split('?');
@@ -50,9 +52,13 @@ var iknow = {
 		if(query[1]) $($.map(query[1].split('&'), function(a) { return [a.split('=')]; })).each(function() {
 			iknow.params[this[0]] = this[1];
 		});
+		
+	  console.log('2');
 
 		// default to en for loading (if not passed from params)
 		iknow.changeLanguageTo(iknow.params.lang || 'en');
+		
+	  console.log('3');
 
 		// create the smartjs session
 		iknow.session = new smart.session({
@@ -64,6 +70,9 @@ var iknow = {
 			//recall: false
 		});
 		
+		
+	  console.log('4');
+		
 		iknow.session.bind('ready', iknow.ready);
 		iknow.session.bind('error', iknow.error);
 		iknow.session.bind('next', iknow.next);
@@ -71,13 +80,18 @@ var iknow = {
 
 		// load data into the session (which then fires the 'ready' event)
 		//iknow.session.load(json_images);
-		iknow.session.load({
-			list: parseInt(iknow.params.list),
-			token: iknow.params.token, server: 'smart.fm'
-		});	
+		//iknow.session.load({
+		//	list: parseInt(iknow.params.list),
+		//	token: iknow.params.token, server: 'smart.fm'
+		//});	
+		
+		
+	  console.log('5');
 
 		iknow.cacheAlignments();
 		iknow._hideCurrent();
+		
+	  console.log('6');
 
 		// initialize top session progress
 		$("#progressbar").progressbar({ value: 0 });
