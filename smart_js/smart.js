@@ -9,7 +9,7 @@ var smart = {
 			callback && callback();
 			smart.trigger('languageChanged');
 		} else {
-			$.getScript('../smart.lang.'+lang+'.js', function() {
+			$.getScript('http://dominiek.github.com/smart_js/smart.lang.'+lang+'.js', function() {
 				smart.language = lang;
 				callback && callback();
 				smart.trigger('languageChanged');
