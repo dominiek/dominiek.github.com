@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Item Animation Demo</title>
+	
+	<script type="text/javascript" src="../../../vendor/jquery-1.3.2.js"></script>
+	<script type="text/javascript" src="effects.core.js"></script>
+	
+	<style type="text/css" media="screen">
+		
+		body, html {
+			font-family: Arial; font-size: 12px;
+			margin: 0; padding: 0; overflow: hidden;
+			background: url(bg.png);
+		}
+		
+		p {
+			text-align: center; position: absolute;
+			top: 0px; left: 0px; right: 0px;
+			opacity: 0; margin: 0; color: #999;
+		}
+		
+		p span.subtitle {
+			display: block;
+			font-size: 0.2em;
+			color: #666;
+		}
+		
+		p span.emboss {
+			position: absolute; display: block;
+			top: -2px; left: -2px; width: 100%; color: #000;
+		}
+		
+	</style>
+	
+	<script type="text/javascript">
+		
+		$.fn.bounceIn = function() {
+			return this.animate({
+				fontSize: 60,
+				opacity: 1,
+				top: ($(window).height() / 2) - 42
+			}, {
+				duration: 1000,
+				easing: 'easeOutBack'
+			});
+		}
+		
+		var fillCounter = 0;
+		var fillDemo = [
+			['A animated item', '..and a subtitle, baby!'],
+			['Another one', 'with a different subtitle'],
+			['Lorem ipsum', 'dolor sit amet!'],
+			['Francesco', 'soon has a new Macbook!']
+		];
+		$.fn.fill = function() {
+			this.html(fillDemo[fillCounter][0]+'<span class="emboss">'+fillDemo[fillCounter][0]+'</span><span class="subtitle">'+fillDemo[fillCounter][1]+'</span>');
+			fillCounter = fillCounter == fillDemo.length-1 ? 0 : fillCounter+1;
+			return this;
+		}
+
+		
+		$(document).ready(function() {
+			
+			$('p').fill().bounceIn();
+			
+			var p = $('p');
+			$(document).bind('keydown', function(event) {
+
+				if(/40|38/.test(event.keyCode)) {
+					
+					//Puff away the previous
+					$('p').not(p).remove();
+					$('p').stop(1,1).animate({
+						fontSize: 100,
+						top: '-=50px',
+						opacity: 0
+					}, 1000, function() {
+						$(this).remove();
+					});
+					
+					p = $('<p></p>')
+						.fill()
+						.appendTo('body')
+						.bounceIn();
+					
+				}
+				
+				if(/39/.test(event.keyCode)) {
+					
+					//Puff away the previous
+					$('p').animate({
+						left: '-=500px',
+						opacity: 0,
+						fontSize: 12
+					}, 1000, function() { $(this).remove(); });
+					
+					$('<p></p>')
+						.fill()
+						.appendTo('body')
+						.css({
+							left: 500,
+							top: ($(window).height() / 2) - 42
+						})
+						.animate({
+							left: '0px',
+							opacity: 1,
+							fontSize: 60
+						}, 1000);
+					
+				}
+				
+				if(/37/.test(event.keyCode)) {
+					
+					//Puff away the previous
+					$('p').animate({
+						left: '+=500px',
+						opacity: 0,
+						fontSize: 12
+					}, 1000);
+					
+					$('<p></p>')
+						.fill()
+						.appendTo('body')
+						.css({
+							left: -500,
+							top: ($(window).height() / 2) - 42
+						})
+						.animate({
+							left: '0px',
+							opacity: 1,
+							fontSize: 60
+						}, 1000);
+					
+				}				
+				
+			});
+			
+		});
+		
+	</script>
+	
+</head>
+<body>
+
+	<p>A test item<span class="emboss">A test item</span><span class="subtitle">A subtitle, yeah!</span><p>
+
+</body>
+</html>

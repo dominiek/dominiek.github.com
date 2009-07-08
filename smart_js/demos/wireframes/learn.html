@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Study views</title>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js"></script>
+  <script type="text/javascript" src="../../smart.js"></script>
+  <script type="text/javascript" src="../../smart.quizzes.multiple_choice.js"></script>
+  <script type="text/javascript" src="../../vendor/jquery-ui/js/jquery-ui-1.7.2.custom.min.js"></script>
+  <script type="text/javascript" src="../../vendor/jquery-ui/js/button.js"></script>
+  <script type="text/javascript" src="../../vendor/jquery.flip-0.5/jquery.flip-compressed.js"></script>
+  <script type="text/javascript" src="../../vendor/jquery_pagination/lib/jquery_pagination/jquery.pagination.js"></script>
+  <script type="text/javascript" src="../../smart.ime.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+
+
+  <link type="text/css" href="../../vendor/jquery-ui/css/smoothness/jquery-ui-1.7.2.custom.css" rel="stylesheet" media="all" />
+  <link type="text/css" href="../../vendor/jquery_pagination/lib/jquery_pagination/pagination.css" rel="stylesheet" media="all" />
+  <link type="text/css" href="../../vendor/jquery-ui/css/smoothness/buttons.css" rel="stylesheet" media="all" />
+  <link type="text/css" href="../../vendor/smartfm/smartness/base.css" rel="stylesheet" media="all" />
+
+  <script>
+
+  $(document).ready(function(){
+
+    // Tabs
+    $(function() {
+      $("#tabs").tabs();
+      $("#screens").tabs();
+      $("#screens").tabs('select', 0);
+    });
+
+    //$('.session-sentence').each(function(){$(this).hide()});
+
+    // Progressbar
+    $("#progressbar").progressbar({value:20});
+    $("#progressbar1").progressbar({value:30});
+    $("#progressbar2").progressbar({value:30});
+    $("#progressbar3").progressbar({value:30});
+    $("#progressbar4").progressbar({value:80});
+    $("#quiz-timer").progressbar({value:30});
+    $("#quiz-timer-1").progressbar({value: 30});
+    $(".progress-bar").each(function(){$(this).progressbar({value:40})});
+
+
+    var front = 0;
+
+    cueTextQuiz = [
+    '<div class="item-card-inner-response cue-text-quiz"><div class="item-response"><span class="response-audio"></span><span class="response-text">new</span><span class="response-image"></span></div><span class="part-of-speech">adjective</span></div>',
+    '<div class="item-card-inner-cue cue-text-quiz"><div class="item-cue"><span class="cue-audio"><a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3">play</a></span><span class="cue-text">あたらしい <em>【新しい】</em></span></div></div>'
+    ];
+
+    cueImageQuiz = [
+    '<div class="item-card-inner-response cue-image-quiz"><div class="item-response"><span class="response-audio"><a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3" class="fg-button ui-state-default ui-corner-all">play</a></span><span class="response-text">Black Kite</span><span class="response-image"></span></div></div>',
+    '<div class="item-card-inner-cue cue-image-quiz"><div class="item-cue"><span class="cue-audio clr"><a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3">play</a></span><span class="cue-image"><img src="http://farm4.static.flickr.com/3202/2661447812_53122783b4.jpg?v=0" /></span></div></div>'
+    ];
+
+    $("#item-card").html(cueTextQuiz[1]);
+
+    $("#item-card").click(function(){
+      $("#item-card").flip({
+        direction: 'bt',
+        color: '#237fcc',
+        speed: 70,
+        content: cueTextQuiz[front]
+      });
+      front = (front == 0) ? 1 : 0;
+    });
+  });
+
+  $(function(){
+    //all hover and click logic for buttons
+    $(".fg-button:not(.ui-state-disabled)")
+    .hover(
+      function(){ 
+        $(this).addClass("ui-state-hover"); 
+      },
+      function(){ 
+        $(this).removeClass("ui-state-hover"); 
+      }
+    )
+    .mousedown(function(){
+      $(this).parents('.fg-buttonset-single:first').find(".fg-button.ui-state-active").removeClass("ui-state-active");
+      if( $(this).is('.ui-state-active.fg-button-toggleable, .fg-buttonset-multi .ui-state-active') ){ $(this).removeClass("ui-state-active"); }
+      else { $(this).addClass("ui-state-active"); }	
+    })
+    .mouseup(function(){
+      if(! $(this).is('.fg-button-toggleable, .fg-buttonset-single .fg-button,  .fg-buttonset-multi .fg-button') ){
+        $(this).removeClass("ui-state-active");
+      }
+    });
+  });
+
+  </script>
+
+
+</head>
+<body>
+  <div id="screens">
+    <ul>
+      <li><a href="#screens-1">Learn</a></li>
+      <li><a href="#screens-2">Recall</a></li>
+      <li><a href="#screens-3">MC Quiz</a></li>
+      <li><a href="#screens-4">Spell Quiz</a></li>
+      <li><a href="#screens-5">Preview/Review</a></li>
+    </ul>
+    <div id="screens-1">
+      <div class="session-window ui-corner-all clr">
+        <div class="session-window-inner clr">
+          <div class="session-heading-panel ui-corner-top clr">
+            <div class="session-progress ui-corner-all clr">
+              <a href="#" class="ui-corner-all ui-button button-play"><span>pause</span></a>
+              <div class="progress-bar-wrapper">
+                <div id="progressbar4"></div>
+              </div>
+              <div id="timer" class="session-timer">00:00</div>
+            </div>
+            <div class="session-settings">
+            </div>
+          </div>
+          <div class="session-main-panel clr">
+            <div class="study-panel">
+              <div id="tabs">
+                <ul>
+                  <li><a href="#tabs-1">Study Item</a></li>
+                  <li><a href="#tabs-2">Sentences</a></li>
+                  <li><a href="#tabs-3">Extra Info</a></li>
+                  <li><a href="#tabs-4">Quiz practice</a></li>
+                </ul>
+                <div id="tabs-1" class="clr">
+                  <div class="item-card large-card ui-corner-all" id="item-card"></div>
+                </div>
+                <div id="tabs-2" class="clr">
+                  <div class="session-sentences">
+                    <div class="session-sentences-inner">
+                      <div class="session-sentence clr" lang="ja" id="sentence_246969" xml:lang="ja" >
+                        <img title="彼の車は新しい。" src="http://assets1.smart.fm/assets/legacy/images/02/5396779.jpg" />
+                        <span class="cue-audio">
+                          <a class="" href="http://assets2.smart.fm/assets/legacy/JLL/audio/JS00147A.mp3">play</a>
+                        </span>
+                        <p class="session-sentence-text">
+                          <span class="sentence-text">彼の車は新しい。</span>
+                          <span class="transliteration"> かれ の くるま は あたらしい</span>
+                        </p>
+                        <p class="session-sentence-text">
+                          <span class="translation">His car is <strong>new</strong>.</span>
+                        </p>
+                        <div class="attribution License">
+                          <span class="created_by vcard">
+                            Created by:
+                            <a href="http://smart.fm/user/Cerego">Cerego</a>
+                          </span>
+                          <span class="vcard from">
+                            Sentence Source:
+                            Cerego
+                          </span>
+                        </div>
+                      </div>
+                      <div class="session-sentence clr" lang="ja" id="sentence_247241" xml:lang="ja" style="display:none;">
+                        <img title="新しい年が始まりました。" src="http://assets1.smart.fm/assets/legacy/images/02/4796732.jpg" />
+                        <a class="fg-button ui-state-default ui-corner-all" href="http://assets0.smart.fm/assets/legacy/JLL/audio/JS06421A.mp3">play</a>
+                        <p class="session-sentence-text">
+                          <span class="sentence-text">新しい年が始まりました。</span>
+                          <span class="transliteration">  あたらしい とし が はじまりました</span>
+                        </p>
+                        <div class="attribution License">
+                          <span class="created_by vcard">
+                            Created by:
+                            <a href="http://smart.fm/user/Cerego">Cerego</a>
+                          </span>
+                          <span class="vcard from">
+                            Sentence Source:
+                            Cerego
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="tabs-3" class="clr">
+                  <div class="extra-info">
+                    <div class="extra-info-inner">
+                      <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+
+                      <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+
+                      <img title="彼の車は新しい。" src="http://assets1.smart.fm/assets/legacy/images/02/5396779.jpg" />
+
+                      <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+
+                      <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+                    </div>
+                  </div>
+                </div>
+                <div id="tabs-4" class="clr">
+                  <div class="quiz-types">
+                    <div class="quiz-types-inner">
+                      <div class="mulitple-choice d-5" style="display:none;">
+                        <p class="multiple-choice-question"><strong> 新しい</strong>は英語でなんですか？</p>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">old</button>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">red</button>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">fresh</button>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">new</button>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">none of the above</button>
+                      </div>
+                      <div class="mulitple-choice d-10" style="display:none;">
+                        <p class="multiple-choice-question"><strong> 新しい</strong>は英語でなんですか？</p>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">old</button>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">red</button>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">fresh</button>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">new</button>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">loud</button>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">fast</button>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">quick</button>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">brown</button>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">new</button>
+                        <button type="button" class="fg-button ui-state-default ui-corner-all">big</button>
+                      </div>
+                      <div class="enter-missing" style="">
+                        <div class="enter-missing-inner">
+                          <div class="enter-missing-item">
+                            <div class="item-cue">
+                              <span class="cue-audio">
+                                <a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3">play</a>
+                              </span>
+                              <span class="cue-text"><em>【新しい】</em></span>
+                            </div>
+                            <div class="enter-missing-input">
+                              <div class="dictation-input-wrapper">
+                                <input type="text" value="" class="dictation-input" size="6" maxlength="5">
+                                <div class="dictation-bars"></div>	
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>  
+              </div>
+            </div><!-- End demo -->
+          </div>
+          <div class="session-footer-panel ui-corner-bottom clr">
+            <div class="right-button">
+              <a href="#" class="fg-button ui-state-default ui-corner-all"><span class="ui-icon icon-next-large">►</span>Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="screens-2">
+      <div class="session-window ui-corner-all recall-screen clr">
+        <div class="session-window-inner clr">
+          <div class="session-heading-panel ui-corner-top clr">
+            <div class="session-progress ui-corner-all clr">
+              <a href="#" class="ui-corner-all ui-button button-play"><span>pause</span></a>
+              <div class="progress-bar-wrapper">
+                <div id="progressbar4"></div>
+              </div>
+              <div id="timer" class="session-timer">00:00</div>
+            </div>
+            <div class="session-settings">
+            </div>
+          </div>
+          <div class="session-main-panel clr">
+            <div class="session-recall item-card cue-text-recall ui-corner-all">
+              <div class="session-recall-inner">
+                <div class="item-cue">
+                  <span class="cue-text">あたらしい <em>【新しい】</em></span>
+                </div>
+                <p class="session-recall-question">Do you know the meaning?</p>
+              </div>
+            </div>
+          </div>
+          <div class="session-footer-panel ui-corner-bottom clr">
+            <div class="fg-buttonset fg-buttonset-single">
+              <button class="fg-button ui-state-default ui-priority-primary ui-corner-left">No</button>
+              <button class="fg-button ui-state-default ui-priority-primary">Maybe</button>
+              <button class="fg-button ui-state-default ui-priority-primary ui-corner-right">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="screens-3">
+      <div class="session-window ui-corner-all multiple-choice-screen clr">
+        <div class="session-window-inner clr">
+          <div class="session-heading-panel ui-corner-top clr">
+            <div class="session-progress ui-corner-all clr">
+              <a href="#" class="ui-corner-all ui-button button-play"><span>pause</span></a>
+              <div class="progress-bar-wrapper">
+                <div id="progressbar4"></div>
+              </div>
+              <div id="timer" class="session-timer">00:00</div>
+            </div>
+            <div class="session-settings">
+            </div>
+          </div>
+          <div class="session-main-panel clr">
+            <div class="multiple-choice-quiz">
+              <div class="mulitple-choice d-10">
+                <p class="multiple-choice-question"><strong> 新しい</strong>は英語でなんですか？</p>
+                <button type="button" class="fg-button ui-state-default ui-corner-all">old</button>
+                <button type="button" class="fg-button ui-state-default ui-corner-all">red</button>
+                <button type="button" class="fg-button ui-state-default ui-corner-all">fresh</button>
+                <button type="button" class="fg-button ui-state-default ui-corner-all">new</button>
+                <button type="button" class="fg-button ui-state-default ui-corner-all">loud</button>
+                <button type="button" class="fg-button ui-state-default ui-corner-all">fast</button>
+                <button type="button" class="fg-button ui-state-default ui-corner-all">quick</button>
+                <button type="button" class="fg-button ui-state-default ui-corner-all">brown</button>
+                <button type="button" class="fg-button ui-state-default ui-corner-all">new</button>
+                <button type="button" class="fg-button ui-state-default ui-corner-all">big</button>
+              </div>
+            </div>
+          </div>
+          <div class="session-footer-panel ui-corner-bottom clr">
+            <div id="quiz-timer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="screens-4">
+      <div class="session-window ui-corner-all recall-screen clr">
+        <div class="session-window-inner clr">
+          <div class="session-heading-panel ui-corner-top clr">
+            <div class="session-progress ui-corner-all clr">
+              <a href="#" class="ui-corner-all ui-button button-play"><span>pause</span></a>
+              <div class="progress-bar-wrapper">
+                <div id="progressbar4"></div>
+              </div>
+              <div id="timer" class="session-timer">00:00</div>
+            </div>
+            <div class="session-settings">
+            </div>
+          </div>
+          <div class="session-main-panel clr">
+            <div class="enter-missing-quiz">
+              <div class="enter-missing-inner">
+                <div class="enter-missing-item">
+                  <div class="item-cue">
+                    <span class="cue-audio">
+                      <a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3" class="fg-button ui-state-default ui-corner-all">play</a>
+                    </span>
+                    <span class="cue-text"><em>【新しい】</em></span>
+                  </div>
+                  <div class="enter-missing-input">
+                    <div class="dictation-input-wrapper">
+                      <input type="text" value="" class="dictation-input">
+                      <div class="dictation-bars"></div>	
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="session-footer-panel ui-corner-bottom clr">
+            <div id="quiz-timer-1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="screens-5">
+      <div class="session-window ui-corner-all clr">
+        <div class="session-window-inner clr">
+          <div class="session-heading-panel ui-corner-top clr">
+            <div class="session-progress ui-corner-all clr">
+              <a href="#" class="ui-corner-all ui-button button-play"><span>pause</span></a>
+              <div class="progress-bar-wrapper">
+                <div id="progressbar4"></div>
+              </div>
+              <div id="timer" class="session-timer">00:00</div>
+            </div>
+            <div class="session-settings">
+            </div>
+          </div>
+          <div class="session-main-panel clr">
+            <div class="session-preview">
+              <div class="session-preview-inner">
+                <div class="item-card small-card ui-widget-content ui-corner-all" id="item-card-1">
+                  <div class="item-flipcard-inner-cue cue-text">
+                    <div class="item-cue">
+                      <span class="cue-audio">
+                        <a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3" class="">play</a>
+                      </span>
+                      <span class="cue-text">あたらしい <em>【新しい】</em></span>
+                    </div>
+                  </div>
+                  <div class="item-progress">
+                    <span>30%</span>
+                    <div class="progress-bar">
+                    </div>
+                  </div>
+                </div>
+                <div class="item-card small-card ui-corner-all ui-widget-content" id="item-card-2">
+                  <div class="item-flipcard-inner-cue cue-text">
+                    <div class="item-cue">
+                      <span class="cue-audio">
+                        <a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3" class="">play</a>
+                      </span>
+                      <span class="cue-text">あたらしい <em>【新しい】</em></span>
+                    </div>
+                  </div>
+                  <div class="item-progress">
+                    <span>30%</span>
+                    <div class="progress-bar">
+                    </div>
+                  </div>
+                </div>
+                <div class="item-card small-card ui-widget-content ui-corner-all" id="item-card-3">
+                  <div class="item-flipcard-inner-cue cue-text">
+                    <div class="item-cue">
+                      <span class="cue-audio">
+                        <a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3" class="">play</a>
+                      </span>
+                      <span class="cue-text">あたらしい <em>【新しい】</em></span>
+                    </div>
+                  </div>
+
+                  <div class="item-progress">
+                    <span>30%</span>
+                    <div class="progress-bar">
+                    </div>
+                  </div>
+                </div>
+                <div class="item-card small-card ui-widget-content ui-corner-all" id="item-card-4">
+                  <div class="item-flipcard-inner-cue cue-text">
+                    <div class="item-cue">
+                      <span class="cue-audio">
+                        <a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3" class="">play</a>
+                      </span>
+                      <span class="cue-text">あたらしい <em>【新しい】</em></span>
+                    </div>
+                  </div>
+
+                  <div class="item-progress">
+                    <span>30%</span>
+                    <div class="progress-bar">
+                    </div>
+                  </div>
+                </div>
+                <div class="item-card small-card ui-widget-content ui-corner-all" id="item-card-5">
+                  <div class="item-flipcard-inner-cue cue-text">
+                    <div class="item-cue">
+                      <span class="cue-audio">
+                        <a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3" class="">play</a>
+                      </span>
+                      <span class="cue-text">あたらしい <em>【新しい】</em></span>
+                    </div>
+                  </div>
+                  <div class="item-progress">
+                    <span>30%</span>
+                    <div class="progress-bar">
+                    </div>
+                  </div>
+                </div>
+                <div class="item-card small-card ui-widget-content ui-corner-all" id="item-card-6">
+                  <div class="item-flipcard-inner-cue cue-text">
+                    <div class="item-cue">
+                      <span class="cue-audio">
+                        <a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3" class="">play</a>
+                      </span>
+                      <span class="cue-text">あたらしい <em>【新しい】</em></span>
+                    </div>
+                  </div>
+
+                  <div class="item-progress">
+                    <span>30%</span>
+                    <div class="progress-bar">
+                    </div>
+                  </div>
+                </div>
+                <div class="item-card small-card ui-widget-content ui-corner-all" id="item-card-7">
+                  <div class="item-flipcard-inner-cue cue-text">
+                    <div class="item-cue">
+                      <span class="cue-audio">
+                        <a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3" class="">play</a>
+                      </span>
+                      <span class="cue-text">あたらしい <em>【新しい】</em></span>
+                    </div>
+                  </div>
+
+                  <div class="item-progress">
+                    <span>30%</span>
+                    <div class="progress-bar">
+                    </div>
+                  </div>
+                </div>
+                <div class="item-card small-card ui-widget-content ui-corner-all" id="item-card-8">
+                  <div class="item-flipcard-inner-cue cue-text">
+                    <div class="item-cue">
+                      <span class="cue-audio">
+                        <a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3" class="">play</a>
+                      </span>
+                      <span class="cue-text">あたらしい <em>【新しい】</em></span>
+                    </div>
+                  </div>
+
+                  <div class="item-progress">
+                    <span>30%</span>
+                    <div class="progress-bar">
+                    </div>
+                  </div>
+                </div>
+                <div class="item-card small-card ui-widget-content ui-corner-all" id="item-card-9">
+                  <div class="item-flipcard-inner-cue">
+                    <div class="item-cue-image">
+                      <span class="cue-audio clr">
+                        <a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3" class="">play</a></span>
+                        <span class="cue-image"><img src="http://farm4.static.flickr.com/3202/2661447812_53122783b4.jpg?v=0" /></span>
+                      </div>
+                    </div>
+
+                    <div class="item-progress">
+                      <span>30%</span>
+                      <div class="progress-bar">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-card small-card ui-widget-content ui-corner-all" id="item-card-10">
+                    <div class="item-flipcard-inner-cue cue-text">
+                      <div class="item-cue">
+                        <span class="cue-audio">
+                          <a href="http://assets1.smart.fm/assets/legacy/JLL/audio/JW10045A.mp3" class="">play</a>
+                        </span>
+                        <span class="cue-text">あたらしい <em>【新しい】</em></span>
+                      </div>
+                    </div>
+
+                    <div class="item-progress">
+                      <span>30%</span>
+                      <div class="progress-bar">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="session-footer-panel ui-corner-bottom clr">
+              <div class="right-button">
+                <a href="#" class="fg-button ui-state-default ui-corner-all"><span class="ui-icon icon-next-large">►</span>Next</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,668 @@
+body {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #333;
+  font-family: arial,helvetica,sans-serif;
+}
+
+.page-wrapper {
+  margin: 2em;
+}
+
+.loading-spinner, .loading-error {
+  position: absolute;
+  top: 18em;
+  left: 50%;
+  z-index: 300;
+  color: #2C9DFF;
+  width: 4em;
+  text-align: center;
+  margin: 0 0 0 -2em;
+}
+
+.loading-error {
+  display: none;
+  width: 20em;
+  margin: -10em;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.session-paused {
+  background:#000000 none repeat scroll 0 0;
+  position: absolute;
+  z-index: 1001;
+  color: #FFFFFF;
+  display: block;
+  font-size: 2em;
+  left: 50%;
+  margin: 0 0 0 -7em;
+  padding: 2em;
+  text-align: center;
+  top: 9em;
+  opacity: .7;
+  -moz-border-radius: .5em;
+  -webkit-border-radius: .5em;
+}
+
+.overlay {
+  display: none;
+  z-index: 1000;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0.5;
+}
+
+.session-window {
+  width: 65em;
+  margin: 0 auto;
+  height: 41.3em;
+  font-size: 1.1em;
+  border: 1px solid #aaa;
+  position: relative;
+  top: -20em;
+  opacity: 0;
+}
+
+.session-heading-panel {
+  border-bottom: 1px solid #aaa;
+}
+
+.session-main-panel {
+  width: 65em;
+  display: table-cell;
+  vertical-align: middle;
+  height: 34.2em;
+  position: relative;
+}
+
+.valign-center {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.session-footer-panel {
+  border-top: 1px solid #aaa;
+  height: 3.1em;
+  font-size: 1.5em;
+}
+
+.session-progress {
+  width: 26em;
+  float: left;
+  font-size: .8em;
+  height: 3em;
+}
+
+.progress-bar-wrapper {
+  width: 15em;
+  float: left;
+  margin: .6em .3em .6em .5em;
+}
+
+.session-heading-panel .ui-button {
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  display: block;
+  float: left;
+  margin: 0 .5em 0 0;
+}
+
+.session-timer {
+  float: left;
+  margin: .5em 0;
+  font-size: 1.3em;
+  font-weight: bold;
+  float: right;
+  line-height: 1;
+}
+
+.ui-progressbar {
+  height: 1.6em;
+}
+
+.ui-tabs .ui-tabs-nav {
+  float: none;
+  text-align: center;
+  background: none;
+  padding: 0.75em;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected {
+  padding-bottom: 0.4em;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a {
+  border: none;
+  font-weight: bold;
+  font-size: 1em;
+  margin: 1px;
+}
+
+.ui-tabs .ui-tabs-nav li {
+  float: none;
+  display: inline;
+  padding: .1em 0;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+  float: none;
+  padding: .35em 2em;
+  font-weight: bold;
+}
+
+.ui-tabs-nav {
+  border: none;
+}
+
+.ui-tabs .ui-tabs-panel {
+  padding: 3em;
+}
+
+.session-window .ui-tabs .ui-tabs-panel {
+  position: relative;
+  height: 28em;
+  width: 53em;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.study-panel {
+  position: relative;
+}
+
+.ui-widget {
+  font-family: Arial,sans-serif;
+}
+
+.session-footer-panel .ui-state-default,
+.session-footer-panel .ui-widget-content .ui-state-default {
+  font-weight: bold;
+  text-align: left;
+}
+
+.session-footer-panel .ui-icon {
+  width: 1em;
+  height: 1.2em;
+  margin: 0;
+  float: right;
+}
+
+.ui-state-default .icon-next-large {
+  position: absolute;
+  top: 0.4em;
+  right: .5em;
+}
+
+.session-footer-panel .ui-progressbar {
+  margin: 0.6em 0.5em 0.5em;
+}
+
+.cue-audio a.ui-state-default, .response-audio a.ui-state-default {
+  -moz-border-radius: 2em;
+  -webkit-border-radius: 2em;
+  display: inline;
+  padding: .5em .5em .5em .7em;
+  font-size: .7em;
+  float: none;
+  vertical-align: text-top;
+}
+
+.study-panel .cue-audio a.ui-state-default {
+  vertical-align: super;
+}
+
+.fg-button {
+  margin: 0 0 0 0;
+}
+.left-button {
+  float: left;
+}
+.middle-button {
+  width: 3em;
+  margin: auto;
+}
+.right-button {
+  float: right;
+  margin: .4em;
+}
+
+
+.session-window .cue-image {
+  position: absolute;
+  height: 25em;
+  width: 49.5em;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.session-window .cue-image img {
+  position: absolute;
+}
+
+.session-window .cue-text em {
+  clear: both;
+  font-style: normal;
+  display: block;
+}
+
+.small-card .item-cue-image .cue-audio a {
+  height: 1.7em;
+  width: 1.7em;
+}
+
+.session-sentences .cue-audio, .session-sentences .cue-audio {
+  float: left;
+  margin: .6em 0 0;
+}
+
+
+/* Item cards */
+
+.item-card {
+  border: 1px solid #aaa;
+}
+
+.item-card .new-item {
+  padding: .2em .5em;
+  position: absolute;
+  right: -.5em;
+  top: 1.5em;
+  z-index: 255;
+  font-size: .8em;
+  font-weight: bold;
+  border: 1px solid #aaa;
+  background: #fff;
+}
+
+.small-card .cue-text,
+.small-card .response-text {
+  font-size: 1.1em;
+  text-align: center;
+  font-weight: bold;
+}
+
+.small-card .cue-text {
+  font-size: 1.2em;
+  padding: 0 .1em;
+}
+
+.small-card .image-item .cue-text {
+  overflow: hidden;
+  display: block;
+  width: 7em;
+  position: absolute;
+  z-index: 100;
+}
+
+.small-card .item-progress {
+  left: 0;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 1.4em;
+  top: 9.3em;
+}
+
+.small-card .item-progress span {
+  font-size: 0.7em;
+  font-weight: bold;
+  position: absolute;
+  right: .5em;
+  top: .1em;
+}
+
+.small-card .item-progress .progress-bar {
+  font-size: .7em;
+}
+
+.small-card .item-cue {
+  text-align: center;
+  width: 11em;
+  height: 12.5em;
+  display: table-cell;
+  vertical-align: middle;
+  margin: 0 1em;
+}
+
+.small-card .item-card-inner-response .cue-text {
+  font-size: 1.2em;
+}
+  
+.small-card .cue-image {
+  height: 14.4em;
+  width: 10.9em;
+}
+
+.small-card .cue-image img {
+  position: relative;
+}
+
+.item-progress .ui-widget-header {
+  border: none;
+}
+.right-button a {
+  width: 9em;
+}
+.session-preview-inner {
+  padding: 1em 0 0 1em;
+}
+
+
+/* Quiz Item types for study screen */
+.large-card {
+  margin: 0 auto;
+}
+
+.study-panel .item-card-inner-response, .cue-text-quiz {
+  text-align: center;
+  width: 52em;
+  height: 25em;
+  display: table-cell;
+  vertical-align: middle;
+  position: relative;
+}
+
+.large-card .cue-text,
+.large-card .response-text,
+.session-recall .cue-text,
+.session-recall .response-text,
+.enter-missing-quiz .cue-text {
+  font-size: 2.4em;
+}
+
+.cue-image-quiz {
+  text-align: center;
+  width: 49.5em;
+  height: 25em;
+}
+
+.cue-image-quiz .item-cue {
+  position: relative;
+  width: 25em;
+}
+
+.cue-text-quiz a.fg-button, .item-flipcard-inner-response a.fg-button {
+  float: none;
+}
+
+div.flyover {
+  width: 21em;
+  text-align: center;
+  line-height: 1;
+  font-size:2.5em;
+}
+
+div.image-side-1 {
+  border-left: 1px solid #000;
+  float: left;
+  display: inline;
+  width: 10.5em;
+}
+
+div.image-side-0 {
+  border-right: 1px solid #3D5B74;
+  float: left;
+  display: inline;
+  width: 10.5em;
+  height: 9em;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+div.image-side-1 span {
+  height: 9em;
+  width: 10.5em;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.text-side-1 {
+  border-top: 1px solid #000;
+}
+
+.text-side-0 {
+  border-bottom: 1px solid #3D5B74;
+}
+
+div.flyover .cue-text {
+  padding: 0 0 .4em;
+}
+
+
+div.flyover .response-text {
+  padding: .4em 0 1.5em;
+}
+
+div.flyover img {
+  width: 6em;
+}
+
+/* Sentences for study screen */
+
+.session-sentences-inner {
+  height: 25.5em;
+  width: 53em;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.session-sentences {
+  position: relative;
+}
+.session-sentence img {
+  float: right;
+  width: 260px;
+}
+
+.session-sentence-text {
+  margin: 0 21em 1em 2em;
+}
+
+.session-sentence .sentence-text {
+  font-size: 2em;
+}
+
+.session-sentence .transliteration {
+  display: block;
+  font-size: 1.2em;
+}
+
+.session-sentence .translation {
+  display: block;
+  font-size: 1.4em;
+}
+
+.session-sentence .attribution {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: .8em;
+}
+
+
+/* Extra info */
+.study-panel .extra-info {
+  overflow: auto;
+  height: 28.5em;
+  border: none;
+  text-align: left;
+  margin: 2em 0 0;
+}
+.extra-info-inner p {
+  margin: 0 0 2em;
+  font-size: 1.2em;
+}
+
+.small-card-inner .text-item {
+  position: relative;
+  z-index: 200;
+}
+
+/* Quiz types */
+.multiple-choice .fg-button {
+  margin: 0 .3em .3em 0;
+  width: 98%;
+  font-size: 1.4em;
+  text-align: left;
+}
+.multiple-choice-question {
+  font-size: 1.3em;
+  margin: 0 0 .2em;
+}
+
+.d-10 .fg-button {
+  width: 48%;
+  height: 3em;
+  font-size: 1.4em;
+}
+.d-5 .fg-button {
+  height: 3.8em;
+}
+
+
+.small-card {
+  float: left;
+  margin: .5em 0.8em;
+  position: relative;
+  width: 11em%;
+  height: 15.5em;
+}
+
+.small-card-inner {
+  line-height: 1.3;
+  height: 14.5em;
+  position: relative;
+}
+
+
+.multiple-choice-quiz .fg-button,
+.large-card {
+  margin: 0.3em;
+  float: left;
+  position: relative;
+  line-height: 1.3;
+}
+
+.multiple-choice-image .fg-button {
+  float: left;
+  width: 47.5%;
+  height: 7.5em;
+  overflow: hidden;
+  padding: 0;
+  vertical-align: top;
+}
+
+.multiple-choice-image .last-button {
+  float: none;
+  width: 97%;
+  height: 5em;
+  padding: 0.4em
+}
+.multiple-choice-image .fg-button img {
+  position: relative;
+}
+
+.enter-missing-item {
+  position: relative;
+}
+
+.enter-missing-item .answer-icon {
+  width: 3em;
+  height: 3em;
+  margin: 0 -1.7em;
+  position: absolute;
+  left: 50%;
+  top: 6em;
+}
+
+.enter-missing-inner {
+  text-align: center;
+  width: 50em;
+  height: 24.5em;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.dictation-input-wrapper {
+  margin: .5em 0 0;
+  font-size: 2em;
+}
+.dictation-input {
+  background: transparent;
+  color: #000;
+  letter-spacing: 0.3em;
+  border: none;
+}
+.dictation-bars {
+  border-bottom: 0.2em dashed #aaa;
+}
+
+/* Recall screen */
+
+.fg-buttonset-single {
+  width: 99%;
+  margin: 0.4em;
+}
+
+.fg-buttonset-single .fg-button,
+.fg-buttonset-multi .fg-button {
+  width: 33.2%;
+  font-size: 1em;
+}
+
+
+.session-recall {
+  margin: 2em;
+}
+
+.session-recall-inner {
+  text-align: center;
+  width: 61em;
+  height: 28em;
+  display: table-cell;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+.session-recall .fg-button {
+  float: none;
+}
+.session-recall-question {
+  font-size: 1.4em;
+}
+.session-recall .item-cue {
+  margin: 1em;
+  font-size: 1.4em;
+}
+
+.session-recall .item-cue-image {
+  margin: 0;
+  height: 17em;
+}
+
+.recall-screen .session-footer-panel .fg-button {
+  text-align: center;
+}
+
+.multiple-choice-screen .session-footer-panel {
+}
+
+.multiple-choice-quiz {
+  margin: 0 2em;
+  height: 33em;
+  position: relative;
+}
+
+.multiple-choice-quiz .d-10 .fg-button {
+  height: 3.8em;
+}

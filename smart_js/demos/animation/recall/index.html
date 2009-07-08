@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Recall</title>
+	
+	<script type="text/javascript" src="../../../vendor/jquery-1.3.2.js"></script>
+	<script type="text/javascript" src="effects.core.js"></script>
+	<script type="text/javascript" src="jquery.flip.js"></script>
+	
+	<style type="text/css" media="screen">
+		
+		body, html {
+			font-family: Arial; font-size: 12px;
+			margin: 0; padding: 0; overflow: hidden;
+			background: url(bg.png);
+		}
+		
+		.instruction {
+			text-align: center;
+			font-size: 26px;
+			margin-top: 40px;
+			color: #666;
+			opacity: 0;
+		}
+		
+		.fade-ins {
+			width: 400px;
+			position: absolute;
+			left: 50%; margin-left: -200px;
+			top: 50%; margin-top: -96px;
+			text-align: center;
+			font-size: 30px;
+		}
+		
+		.fade-ins p {
+			opacity: 0;
+			position: relative;
+		}
+		
+		.card {
+			width: 422px; height: 139px;
+			background: url(card.png); text-align: center;
+			position: absolute; left: 50%; top: 50%;
+			margin-left: -211px; margin-top: -70px;
+			cursor: hand; cursor: pointer;
+			opacity: 0;
+		}
+		
+		.card p {
+			font-size: 40px;
+			padding: 0; margin-top: 44px;
+		}
+
+		
+	</style>
+	
+	<script type="text/javascript">
+		
+		$(document).ready(function() {
+			
+			//Fade ins
+			$('div.fade-ins p:eq(0)').fadeTo(500, 1)
+			setTimeout(function() { $('div.fade-ins p:eq(0)').fadeTo(500, 0); }, 1000);
+			setTimeout(function() { $('div.fade-ins p:eq(1)').fadeTo(500, 1); }, 2000);
+			setTimeout(function() { $('div.fade-ins p:eq(1)').fadeTo(500, 0); }, 3500);
+			setTimeout(function() { $('div.fade-ins p').fadeTo(500, 1); }, 4500);
+			
+			setTimeout(function() {
+				
+				$('div.fade-ins p:eq(0)').animate({ top: 50 }, 500);
+				$('div.fade-ins p:eq(1)').animate({ top: -50 }, 500);
+				$('div.fade-ins *').fadeTo(500, 0);
+				$('div.card, p.instruction').fadeTo(500, 1);
+				
+			}, 5500);
+			
+			
+			var toggle = 0;
+			$('.card').click(function() {
+				
+				var self = this; toggle = !toggle;
+				$(this).flip({
+					direction: 'tb',
+					bgColor: '#eee',
+					color: '#eee',
+					speed: 200,
+					content: toggle ? '<p>犬</p>' : '<p>Dog</p>',
+					onEnd: function() {
+						$(self).css('backgroundColor', '');
+					}
+				}); 
+				
+			});
+			
+		});
+		
+	</script>
+	
+</head>
+<body>
+
+	<p class="instruction">Click the card to flip it.</p>
+
+	<div class='fade-ins'>
+		
+		<p>Dog</p>
+		
+		<hr size="1" noshade>
+		
+		<p>犬</p>
+		
+	</div>
+
+	<div class="card">
+		<p>Dog</p>
+	</div>
+
+</body>
+</html>
