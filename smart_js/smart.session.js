@@ -344,7 +344,7 @@ $.extend(smart.session.prototype, {
 			self = this;
 		this.items = data.items.shuffle();
 		this.distractors = data.distractors;
-		this.responseLanguage = data.list.response_language;
+		this.responseLanguage = (data.list && data.list.response_language) || "en";
 		
 		// if we have distractors outside the actual items, resolve them into a hash
 		if(this.distractors) {

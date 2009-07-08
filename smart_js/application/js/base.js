@@ -8,24 +8,18 @@ var iknow = {
 	mode: (['full','simple', 'latin', 'kanji'])[0],
 	
 	cacheAlignments: function() {
-	  
-	  console.log('hello 1');
 		
 		//Calculate the parent offsets of alignment containers
 		var p = $('#calculate-preview'),
 			r = $('#calculate-recall'),
 			s = $('#calculate-study'),
 			q = $('#calculate-quiz');
-			
-	  console.log(p,r,s,q);
 
 		iknow.alignments = {};
 		iknow.alignments.preview = { width: p[0].offsetWidth, height: p[0].offsetHeight };
 		iknow.alignments.recall = { width: r[0].offsetWidth, height: r[0].offsetHeight };
 		iknow.alignments.study = { width: s[0].offsetWidth, height: s[0].offsetHeight };
 		iknow.alignments.quiz = { width: q[0].offsetWidth, height: q.innerHeight() };
-
-	  console.log('hello 3');
 		
 	},
 	
